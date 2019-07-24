@@ -1,0 +1,7 @@
+void operator=(const char* cpxstr) {
+    string cpxvalue(cpxstr);
+    string delimiter = "+";
+    r = atoi(cpxvalue.substr(0, cpxvalue.find(delimiter)).c_str());
+    cpxvalue.erase(0, cpxvalue.find(delimiter) + delimiter.length());
+    i = atoi(cpxvalue.substr(0, cpxvalue.find("i")).c_str());
+}

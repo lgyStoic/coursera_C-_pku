@@ -1,0 +1,41 @@
+class Array2{
+private:
+    int *p;
+    int column;
+    int row;
+    int size;
+public:
+    Array2(const int a, const int b):size(a * b), column(b), row(a){
+        p = new int[size];
+    }
+
+    Array2(){
+        column = 0;
+        row = 0;
+        size = 0;
+    }
+
+    Array2(const Array2 &a1) {
+        if(a1.p){
+            column = a1.column;
+            row = a1.row;
+            size = a1.size;
+            memcpy(p, a1.p, a1.size);
+        }
+        column = 0;
+        row = 0;
+        size = 0;
+    }
+
+    int *operator[](int index);
+
+    int operator()(const int a, const int b) {
+        return p[a * column + b];
+    }
+};
+
+
+int* Array2::operator[](int index) {
+    return &p[index * column];
+
+}

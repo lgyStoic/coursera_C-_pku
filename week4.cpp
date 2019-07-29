@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <string>
 
 using namespace std;
 
@@ -36,6 +37,7 @@ public:
     static const BigData &reformatBigData(const BigData &b);
     char operator[](int index);
     friend bool operator>(const BigData &a, const BigData &b);
+    friend bool operator==(const BigData &a, const BigData &b);
     friend ostream& operator<<(ostream &os, const BigData &a);
 };
 
@@ -62,6 +64,27 @@ const BigData & BigData::reformatBigData(const BigData &b){
     return *formatB;
 }
 
+bool operator==(const BigData &a, const BigData &b) {
+    BigData aformat = BigData::reformatBigData(a);
+    BigData bformat = BigData::reformatBigData(b);
+    if (aformat.size > bformat.size)
+    {
+        return false;
+    }
+    if (aformat.size < bformat.size)
+    {
+        return false;
+    }
+    for (int i = 0; i < aformat.size; ++i)
+    {
+        if (aformat.p[i] < bformat.p[i] || aformat.p[i] > bformat.p[i])
+        {
+            return false;
+        }
+    } 
+    return true;
+}
+
 bool operator>(const BigData &a, const BigData &b) {
     BigData aformat = BigData::reformatBigData(a);
     BigData bformat = BigData::reformatBigData(b);
@@ -85,7 +108,7 @@ bool operator>(const BigData &a, const BigData &b) {
             return true;
         }
     }
-    return true;
+    return false;
 }
 
 
@@ -174,7 +197,7 @@ BigData & BigData::operator-(const BigData &b){
     BigData *c = new BigData(size > b.size ? size : b.size);
     BigData *greater;
     BigData *smaller;
-    if (*this > b)
+    if ((*this > b) || (*this == b))
     {
         greater = new BigData(*this);
         smaller = new BigData(b);
@@ -268,15 +291,39 @@ BigData & BigData::operator/(const BigData &b){
         BigData *result = new BigData("0");
         return *result;
     }
-    BigData *result = new BigData("0");
-    BigData *addOne = new BigData("1");
-    while((*this) > b){
-        *this = *this - b;
-        *result = (*result) + (*addOne);
-        *this = BigData::reformatBigData(*this);
-        cout << *this << endl;
+    string numerator;
+    string result;
+    for(int i = 0; i < this->size; i++){
+        numerator += this->p[i];
+        BigData temp(numerator);
+        BigData* bitRes;
+        if ((temp > b) || (temp == b)){
+            for (int j = 1; j < 11; j++)
+            {
+                string d(1, j + '0');
+                BigData bdd(d);
+                BigData bdb(b);
+                BigData tpv = bdb * bdd;
+                if (tpv > numerator || j == 10)
+                {
+                    bdd = bdd - BigData("1");
+                    bitRes = new BigData(bdd);
+                    break;
+                }
+            }
+            BigData product = BigData::reformatBigData((*bitRes) * b);
+            BigData remainder = temp - product;
+            
+            remainder = BigData::reformatBigData(remainder);
+            numerator = remainder.p;
+            result += bitRes->p;
+        } else {
+            result += "0";
+        }
     }
-    return *result;
+    BigData *resultbd = new BigData(result);
+    
+    return *resultbd;
 }
 
 BigData::BigData(const string &datastr):size(datastr.length())
@@ -301,6 +348,8 @@ int main(int argc, char const *argv[])
     cin >> b;
     BigData abigdata(a);
     BigData bbigdata(b);
+    abigdata = BigData::reformatBigData(abigdata);
+    bbigdata = BigData::reformatBigData(bbigdata);
     if (symbol.compare("+") == 0)
     {
         BigData c = abigdata + bbigdata;

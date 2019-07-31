@@ -1,7 +1,8 @@
-#include<iostream>
-#include<string>
-#include<map>
+#include <iostream>
+#include <string>
+#include <map>
 #include <iomanip>
+#include <stdio.h>
 
 using namespace std;
 
@@ -45,7 +46,8 @@ public:
         morale = (float)commanderLife / Dragon::SolderCost;
     }
     void description(){
-        cout << "It has a " << weaponName[weapon] << ",and it's morale is " << setprecision(3) << morale << endl;
+        cout << "It has a " << weaponName[weapon] << ",and it's morale is ";
+        printf("%.2f\n", morale);
     }
 };
 int Dragon::SolderCost;
@@ -139,7 +141,7 @@ public:
 bool CommanderHouse::productNext(int flagIndex){
     Solder *solder = NULL;
     if(solderOrder[currentIndex].compare("dragon") == 0){
-        if (totalLifeValue > Dragon::SolderCost)
+        if (totalLifeValue >= Dragon::SolderCost)
         {
             solder =  new Dragon(solderNum, Dragon::SolderCost);
             totalLifeValue -= Dragon::SolderCost;
@@ -148,7 +150,7 @@ bool CommanderHouse::productNext(int flagIndex){
         }       
     }
     if (solderOrder[currentIndex].compare("ninja") == 0){
-        if (totalLifeValue > Ninja::SolderCost)
+        if (totalLifeValue >= Ninja::SolderCost)
         {
             solder = new Ninja(solderNum, Ninja::SolderCost);
             totalLifeValue -= Ninja::SolderCost;
@@ -156,7 +158,7 @@ bool CommanderHouse::productNext(int flagIndex){
         }
     }
     if (solderOrder[currentIndex].compare("lion") == 0){
-        if (totalLifeValue > Lion::SolderCost)
+        if (totalLifeValue >= Lion::SolderCost)
         {
             solder = new Lion(solderNum, Lion::SolderCost, totalLifeValue - Lion::SolderCost);
             totalLifeValue -= Lion::SolderCost;
@@ -164,7 +166,7 @@ bool CommanderHouse::productNext(int flagIndex){
         } 
     }
     if (solderOrder[currentIndex].compare("wolf") == 0){
-        if (totalLifeValue > Wolf::SolderCost)
+        if (totalLifeValue >= Wolf::SolderCost)
         {
             solder = new Wolf(solderNum, Wolf::SolderCost);
             totalLifeValue -= Wolf::SolderCost;
@@ -172,7 +174,7 @@ bool CommanderHouse::productNext(int flagIndex){
         }  
     }
     if (solderOrder[currentIndex].compare("iceman") == 0){
-        if (totalLifeValue > Iceman::SolderCost)
+        if (totalLifeValue >= Iceman::SolderCost)
         {
             solder = new Iceman(solderNum, Iceman::SolderCost);
             totalLifeValue -= Iceman::SolderCost;

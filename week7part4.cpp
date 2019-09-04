@@ -78,10 +78,12 @@ int main(int argc, char const *argv[])
             if((*riter).compare("reset") == 0){
                 string snode = *(riter + 1);
                 string nnode = *(riter + 2);
-                
+                int nvalue = atoi(nnode.c_str());
+                string svalue = snode;
+                strValue[nvalue] = svalue;
             }
             if((*riter).compare("copy") == 0){
-                
+                string snode = *();
             }
             if((*riter).compare("add") == 0){
                 

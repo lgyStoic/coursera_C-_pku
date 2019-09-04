@@ -83,7 +83,13 @@ int main(int argc, char const *argv[])
                 strValue[nvalue] = svalue;
             }
             if((*riter).compare("copy") == 0){
-                string snode = *();
+                string nnode = *(riter + 1);
+                string xnode = *(riter + 2);
+                string lnode = *(riter + 3);
+                int nvalue = atoi(nnode.c_str());
+                int xvalue = atoi(xnode.c_str());
+                int lvalue = atoi(lnode.c_str());
+                
             }
             if((*riter).compare("add") == 0){
                 

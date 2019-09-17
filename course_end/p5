@@ -1,0 +1,11 @@
+class CMy_add{
+    int &sum;
+public:
+    CMy_add(int &n): sum(n){
+       
+    }
+    void operator()(int v){
+        v = v % 8;
+        sum +=v;    
+    }
+};

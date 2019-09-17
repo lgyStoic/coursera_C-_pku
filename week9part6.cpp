@@ -52,10 +52,10 @@ int main(int argc, char const *argv[])
 {
     int num;
     cin >> num;
+    priority_queue<int, vector<int>, numOrder> pq;
     while (num--)
     {
-        int t = 10;
-        priority_queue<int, vector<int>, numOrder> pq;
+        int t = 10;    
         while(t--){
             int n;
             cin >> n;
@@ -63,15 +63,19 @@ int main(int argc, char const *argv[])
         }
         
         int countq = 0;
+        priority_queue<int, vector<int>, numOrder> pq2;
         while (!pq.empty())
         {
             if (countq == 0 || pq.size() == 1)
             {
                 cout << pq.top() << " ";
+            } else {
+                pq2.push(pq.top());       
             }
             countq++;
             pq.pop();
         }
+        pq = pq2;
         cout << endl;     
     }
 

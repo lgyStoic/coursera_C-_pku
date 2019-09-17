@@ -1,0 +1,13 @@
+class MyString :public string{
+
+public:
+    MyString() :string(){};                       //构造函数，针对 s2 初始化的默认
+    MyString(const char* str) :string(str){};     //构造函数，char*是数据类型，而string是类 http://www.cnblogs.com/GODYCA/archive/2013/01/08/2851923.html
+    MyString(MyString &str) :string(str){};       //复制构造函数
+    MyString(const string &str) :string(str){};   //类型转换构造函数，把string类转换为MyString类
+
+    MyString operator()(int startPos, int strLengh){
+        return this->substr(startPos, strLengh);
+    }
+
+};

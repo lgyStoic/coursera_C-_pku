@@ -1,0 +1,13 @@
+friend ostream &operator<< (ostream &os, const Number &a){
+        os << a.num;
+        return os;
+    }
+    Number & value(){
+        return *this;
+    }
+    Number(const Number & a){
+        this->num = a.num;
+    }
+    void operator+(const Number &b){
+        this->num += b.num;
+    }
